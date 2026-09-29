@@ -1,0 +1,51 @@
+<div class="viewer" appZoomScope>
+  <header class="toolbar">
+    <h1 class="title">{{ document().name }}</h1>
+
+    <div class="actions">
+      <button type="button" class="save" (click)="onSave()">
+        Сохранить
+      </button>
+      <app-zoom-controls />
+    </div>
+  </header>
+
+  <div class="scroll" [attr.aria-busy]="false">
+    @if (firstPage(); as page) {
+      <ng-container
+        [ngTemplateOutlet]="article"
+        [ngTemplateOutletContext]="{ $implicit: page, priority: true }"
+      />
+    }
+
+    @for (page of restPages(); track page.number) {
+      @defer (on viewport; prefetch on idle) {
+        <ng-container
+          [ngTemplateOutlet]="article"
+          [ngTemplateOutletContext]="{ $implicit: page }"
+        />
+      } @placeholder {
+        <div class="page-placeholder" aria-hidden="true"></div>
+      }
+    }
+  </div>
+
+  <ng-template #article let-page let-priority="priority">
+    <article
+      class="page"
+      appZoomable
+      [appAnnotations]="annotationsOf(page.number)"
+      appAnnotationCreateType="text"
+      (appAnnotationsChange)="setAnnotations(page.number, $event)"
+    >
+      <img
+        class="image"
+        [ngSrc]="pageSrc(page.imageUrl)"
+        [width]="PAGE_WIDTH"
+        [height]="PAGE_HEIGHT"
+        [alt]="'Страница ' + page.number"
+        [priority]="priority"
+      />
+    </article>
+  </ng-template>
+</div>

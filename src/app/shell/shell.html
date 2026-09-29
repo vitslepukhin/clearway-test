@@ -1,0 +1,9 @@
+<div class="shell" [attr.aria-busy]="resolving()">
+  @if (resolving()) {
+    <div class="loader" role="status" aria-live="polite">
+      Загрузка документа…
+    </div>
+  }
+
+  <router-outlet />
+</div>

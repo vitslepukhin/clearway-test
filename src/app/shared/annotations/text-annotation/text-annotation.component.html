@@ -1,0 +1,24 @@
+@if (editing()) {
+  <input
+    #textInput
+    class="input"
+    type="text"
+    [value]="annotation().text"
+    aria-label="Текст аннотации"
+    (pointerdown)="$event.stopPropagation()"
+    (keydown.enter)="commitText(textInput.value)"
+    (keydown.escape)="commitText(textInput.value)"
+    (blur)="commitText(textInput.value)"
+  />
+} @else {
+  <span class="body">{{ annotation().text || 'Текст' }}</span>
+  <button
+    type="button"
+    class="delete"
+    aria-label="Удалить аннотацию"
+    (click)="onRemove($event)"
+    (pointerdown)="$event.stopPropagation()"
+  >
+    ×
+  </button>
+}

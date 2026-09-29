@@ -1,0 +1,19 @@
+<button
+  type="button"
+  class="btn"
+  aria-label="Уменьшить масштаб"
+  (click)="zoom.zoomOut()"
+>
+  −
+</button>
+<span class="value" aria-live="polite">
+  {{ zoom.percent() }}%
+</span>
+<button
+  type="button"
+  class="btn"
+  aria-label="Увеличить масштаб"
+  (click)="zoom.zoomIn()"
+>
+  +
+</button>

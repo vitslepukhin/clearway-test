@@ -1,0 +1,21 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.shell {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+
+  .loader {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    display: grid;
+    place-items: center;
+    background: rgb(255 255 255 / 85%);
+    color: black;
+    font-size: 1rem;
+  }
+}
