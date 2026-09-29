@@ -17,6 +17,14 @@ npm start
 npm run build
 ```
 
+## Деплой
+
+На каждый push в `main` GitHub Actions собирает production-бандл и публикует его на GitHub Pages:
+
+https://vitslepukhin.github.io/clearway-test/
+
+Прогресс и логи: Actions → workflow **Deploy to GitHub Pages**.
+
 ## Что реализовано
 
 - документ открывается по URL `/document/:documentId`;

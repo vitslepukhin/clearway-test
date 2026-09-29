@@ -1,5 +1,5 @@
-import { NgOptimizedImage, NgTemplateOutlet } from '@angular/common';
-import { Component, computed, input, signal } from '@angular/core';
+import { NgOptimizedImage, NgTemplateOutlet, PlatformLocation } from '@angular/common';
+import { Component, computed, inject, input, signal } from '@angular/core';
 import { DocumentInfo } from '../../../api/document/document.model';
 import { Annotation } from '../../../shared/annotations/annotation.model';
 import { AnnotationsDirective } from '../../../shared/annotations/annotations.directive';
@@ -19,6 +19,7 @@ export class DocumentViewerComponent {
   readonly documentId = input.required<string>();
   readonly document = input.required<DocumentInfo>();
 
+  private readonly baseHref = inject(PlatformLocation).getBaseHrefFromDOM();
   private readonly pageAnnotations = signal<ReadonlyMap<number, Annotation[]>>(
     new Map(),
   );
@@ -30,7 +31,8 @@ export class DocumentViewerComponent {
   protected readonly restPages = computed(() => this.document().pages.slice(1));
 
   protected pageSrc(imageUrl: string): string {
-    return imageUrl.startsWith('/') ? imageUrl : `/${imageUrl}`;
+    const path = imageUrl.startsWith('/') ? imageUrl.slice(1) : imageUrl;
+    return `${this.baseHref}${path}`;
   }
 
   protected annotationsOf(pageNumber: number): Annotation[] {
